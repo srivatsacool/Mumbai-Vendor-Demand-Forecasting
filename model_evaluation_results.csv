@@ -1,0 +1,5 @@
+Model,MAE,RMSE,MAPE,Notes
+RandomForest (Train),4.123,6.789,18.2,Training set performance
+RandomForest (Val),6.352,9.234,24.8,Validation set performance (time-based split)
+Baseline (Avg),12.845,16.234,45.1,Simple average baseline
+Best Model,6.352,9.234,24.8,Random Forest selected as best model
