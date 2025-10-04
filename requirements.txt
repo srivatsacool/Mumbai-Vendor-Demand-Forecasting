@@ -4,7 +4,7 @@ pandas>=2.1.0
 numpy>=1.27.0
 joblib>=1.3.0
 plotly>=5.20.0
-requests>=2.31.0
+requests==2.32.5
 
 # for timezone handling
 pytz>=2025.7
