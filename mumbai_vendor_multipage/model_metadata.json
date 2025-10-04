@@ -1,0 +1,12 @@
+{
+  "model_type": "RandomForestRegressor",
+  "best_validation_mae": 6.352112001621087,
+  "feature_count": 23,
+  "training_date": "2025-10-01",
+  "random_seed": 42,
+  "dataset_shape": [
+    11040,
+    29
+  ],
+  "prediction_uncertainty_std": 7.631454397699946
+}
