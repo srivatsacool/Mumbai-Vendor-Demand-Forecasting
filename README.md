@@ -4,7 +4,12 @@ Predict hourly demand for street food vendors in Mumbai using machine learning. 
 
 ---
 
-# Mumbai Street Vendor Demand Forecasting - Version Features
+# Live WebApp links :
+
+**v1 - https://mumbai-vendor-demand-forecasting.streamlit.app/
+**v2 - https://mumbai-vendor-demand-forecasting-v2.streamlit.app/ 
+**v3 - https://mumbai-vendor-demand-forecasting-v3.streamlit.app/ 
+**v4 - https://mumbai-vendor-demand-forecasting-v4.streamlit.app/
 
 ## Version 0.1 → `app_streamlit.py` (4 days ago)
 **Core Features (Initial MVP):**
