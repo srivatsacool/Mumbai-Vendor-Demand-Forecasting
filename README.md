@@ -65,7 +65,7 @@ Predict hourly demand for street food vendors in Mumbai using machine learning. 
 - Prediction logic fully functional with explanation
 - All charts, historical visualizations, and scenario parameters implemented
 - Download prediction as CSV
-- ⚠️ Multi-language not fully functional due to missing `deep_translator` module
+- ✅ : Implemented Multi-language 
 
 ---
 # Mumbai Street Vendor Demand Forecasting - Version Features
