@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 from deep_translator import GoogleTranslator
 import warnings
+import requests
 warnings.filterwarnings('ignore')
 
 # ----------------------------
@@ -146,7 +147,66 @@ def load_historical():
         return df
 
 historical_data = load_historical()
+# ----------------------------
+# Weather Alerts using WeatherAPI
+@st.cache_data(ttl=600)
+def get_weather_alerts():
+    import requests 
+    API_KEY = "e9323a9f57e6466e91d180135211911"
+    location = "Mumbai"
+    url = f"http://api.weatherapi.com/v1/alerts.json?key={API_KEY}&q={location}"
+    try:
+        response = requests.get(url)
+        data = response.json()
+        if "alerts" in data and data["alerts"]["alert"]:
+            alerts = data["alerts"]["alert"]
+            alert_list = []
+            for a in alerts:
+                alert_list.append({
+                    "headline": a.get("headline", "No title"),
+                    "severity": a.get("severity", "Unknown"),
+                    "event": a.get("event", "N/A"),
+                    "effective": a.get("effective", "N/A"),
+                    "expires": a.get("expires", "N/A"),
+                    "desc": a.get("desc", "No details available.")
+                })
+            return alert_list
+        else:
+            return []
+    except Exception as e:
+        st.warning(f"Error fetching weather alerts: {e}")
+        return []
 
+# ----------------------------
+# Fetch current weather for Mumbai using WeatherAPI
+@st.cache_data(ttl=600)
+def get_current_weather():
+    import requests 
+    API_KEY = "e9323a9f57e6466e91d180135211911"
+    location = "Mumbai"
+    url = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q={location}&aqi=no"
+    try:
+        response = requests.get(url)
+        data = response.json()
+        if data:
+            location_str=f"{data['location']['name']} {data['location']['region']} {data['location']['country']}"
+            last_updated = data['current']["last_updated"]
+            temperature=data['current']["temp_c"]
+            humidity=data['current']["humidity"]
+            rainfall= data['current']["precip_mm"]
+            condition=  data['current']["condition"]["text"]
+            return temperature, humidity, rainfall , condition,last_updated,location_str
+        else:
+            st.warning("Failed to fetch weather, using default values.")
+            return 28.0, 80.0, 0.0, "Clear", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "Mumbai"
+    except:
+        st.warning("Error fetching weather, using default values.")
+        return 28.0, 80.0, 0.0, "Clear", datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "Mumbai"
+
+st.toast("Current Weather Data Extracted!", icon="🎉")  
+temperature, humidity, rainfall , condition,last_updated,location = get_current_weather()
+current_date = datetime.now().date()
+current_hour = datetime.now().hour
 # ----------------------------
 # Sidebar: Scenario inputs (simplified, no weather API)
 st.sidebar.header(TT("📊 Prediction Controls"))
@@ -165,17 +225,31 @@ selected_vendor = st.sidebar.selectbox(
     format_func=lambda x: vendor_options[x]
 )
 
-current_date = datetime.now().date()
-current_hour = datetime.now().hour
-
 st.sidebar.subheader(TT("📅 Date & Time"))
 selected_date = st.sidebar.date_input(TT("Select Date:"), value=current_date)
 selected_hour = st.sidebar.slider(TT("Select Hour:"), 0, 23, int(current_hour))
 
-st.sidebar.subheader(TT("🌤️ Weather (Manual Input)"))
-temperature = st.sidebar.slider(TT("Temperature (°C)"), 18.0, 40.0, 28.0, 0.5)
-rainfall = st.sidebar.slider(TT("Rainfall (mm)"), 0.0, 200.0, 0.0, 0.5)
-humidity = st.sidebar.slider(TT("Humidity (%)"), 30, 100, 70, 1)
+st.sidebar.subheader("🌤️ Weather Conditions (Auto-Filled)")
+st.sidebar.text(f"☁️ Condition: {condition} ")
+st.sidebar.text(f"📍 Location: {location} ")
+st.sidebar.text(f"🕒 Last Updated: {last_updated}")
+st.sidebar.text(f"🌡️ Temperature: { temperature:.1f} °C" )
+st.sidebar.text(f"💧 Humidity: {humidity}%")
+st.sidebar.text(f"🌧️ Rainfall: {rainfall}")
+
+weather_alerts = get_weather_alerts()
+st.sidebar.subheader("⚠️ Weather Alerts")
+if weather_alerts:
+    for alert in weather_alerts:
+        st.sidebar.markdown(f"""
+        **{alert['event']} ({alert['severity']})**
+        🕒 {alert['effective']} → {alert['expires']}  
+        📢 {alert['headline']}  
+        💬 _{alert['desc'][:120]}..._
+        """)
+else:
+    st.sidebar.info("No active weather alerts for Mumbai.")
+
 
 st.sidebar.subheader(TT("🚦 Environment"))
 traffic_density = st.sidebar.selectbox(TT("Traffic Density:"), [TT('low'), TT('medium'), TT('high')], index=1)
