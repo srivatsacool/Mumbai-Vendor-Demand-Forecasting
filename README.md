@@ -1,153 +1,288 @@
-# Mumbai Street Vendor Demand Forecasting
+# Mumbai Vendor Demand Forecasting 🍛
 
-This project provides an end-to-end machine learning solution for predicting hourly demand for street food vendors in Mumbai. The system includes synthetic realistic data, trained models, and an interactive Streamlit application.
+Predict hourly demand for street food vendors in Mumbai using machine learning. This project provides an end-to-end solution including data preprocessing, model training, evaluation, and a Streamlit web app for interactive demand prediction.
 
-## 📁 Project Structure
+---
 
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Data](#data)
+- [Technical Stack](#technical-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Model Training](#model-training)
+- [Visualization](#visualization)
+- [Screenshots](#screenshots)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Project Overview
+
+Mumbai street vendors face highly variable demand due to factors like weather, location, time of day, and festivals. This project forecasts vendor demand on an hourly basis to help vendors optimize inventory, reduce wastage, and maximize sales.
+
+The project includes:
+
+- Data preprocessing and feature engineering
+- Machine learning model training
+- Model evaluation with metrics
+- Interactive Streamlit web app for live predictions
+
+---
+
+## Features
+
+- **Demand Forecasting:** Predict hourly sales for vendors
+- **Feature Automation:** Weather, traffic, events, and holidays are automatically considered
+- **Visualization:** Graphs and charts for historical and predicted demand
+- **User-Friendly UI:** Streamlit web app for easy interaction
+
+---
+
+## Data
+
+The dataset `mumbai_vendors_hourly_20250701_20250930.csv` contains historical sales data with the following features:
+
+| Feature          | Description                               |
+| ---------------- | ----------------------------------------- |
+| vendor_id        | Unique identifier for each vendor         |
+| location_type    | Location type (street, market, etc.)      |
+| cuisine_type     | Type of cuisine sold                      |
+| avg_price        | Average price per unit                    |
+| menu_diversity   | Number of items offered                   |
+| hour_of_day      | Hourly timestamp of sale                  |
+| is_weekend       | Binary indicator for weekends             |
+| is_holiday       | Binary indicator for public holidays      |
+| is_festival      | Binary indicator for festivals            |
+| temperature_c    | Temperature in Celsius                    |
+| rainfall_mm      | Rainfall in mm                            |
+| humidity_pct     | Humidity percentage                       |
+| wind_speed_kmh   | Wind speed in km/h                        |
+| event_nearby     | Indicator if an event is happening nearby |
+| traffic_density  | Traffic conditions                        |
+| competitor_count | Number of nearby vendors                  |
+| lag_1h_units     | Sales 1 hour ago                          |
+| lag_24h_units    | Sales 24 hours ago                        |
+
+---
+
+## Technical Stack
+
+- **Python** – Core programming language
+- **Pandas & NumPy** – Data manipulation and numerical operations
+- **Scikit-learn** – Machine learning algorithms
+- **Joblib** – Model serialization
+- **Plotly & Plotly Express** – Interactive visualizations
+- **Streamlit** – Web application interface
+- **WeatherAPI** – Fetching weather and alerts
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/srivatsacool/Mumbai-Vendor-Demand-Forecasting.git
 ```
-mumbai_street_vendors_forecasting/
-├── mumbai_vendors_hourly_20250701_20250930.csv    # Synthetic dataset
-├── demand_forecast_train.ipynb                     # Training notebook
-├── app_streamlit.py                                # Streamlit application
-├── requirements.txt                                # Python dependencies
-├── README.md                                       # This file
-└── Model artifacts (generated after training):
-    ├── xgb_model.pkl / rf_model.pkl               # Trained model
-    ├── label_encoders.pkl                          # Categorical encoders
-    ├── feature_columns.pkl                         # Feature list
-    └── model_metadata.json                         # Model information
+
+2. Navigate to the project folder:
+
+```bash
+cd Mumbai-Vendor-Demand-Forecasting
 ```
 
-## 🎯 Dataset Overview
+3. Install required dependencies:
 
-**Time Period:** July 1, 2025 - September 30, 2025 (hourly granularity)  
-**Vendors:** 5 distinct street vendors across Mumbai  
-**Total Records:** ~11,040 rows  
-**Features:** 28 columns including weather, festivals, traffic, and lag features
-
-### Vendor Locations
-- **BKC_Pavbhaji**: Business district (main course, ₹85 avg price)
-- **Churchgate_Chai**: Near college (chai & snacks, ₹25 avg price)
-- **Dadar_Chaat**: Market area (chaat, ₹45 avg price)
-- **Andheri_Juice**: Metro station (beverages, ₹35 avg price)
-- **Powai_Dessert**: Office area (desserts, ₹65 avg price)
-
-### Key Features
-- **Weather**: Temperature, rainfall, humidity, wind speed
-- **Time**: Hour, day of week, weekend indicators
-- **Events**: Holidays, festivals, nearby events
-- **Location**: Traffic density, competitor count, location type
-- **Historical**: 1-hour lag, 24-hour lag, rolling averages
-
-## 🚀 Quick Start
-
-### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run the Training Notebook
-```bash
-jupyter notebook demand_forecast_train.ipynb
-```
+---
 
-Execute all cells to:
-- Perform exploratory data analysis
-- Train XGBoost and Random Forest models
-- Generate feature importance analysis
-- Save model artifacts
+## Usage
 
-### 3. Launch the Streamlit App
+### Running the Streamlit App
+
 ```bash
 streamlit run app_streamlit.py
 ```
 
-The app provides:
-- **Interactive Predictions**: Select vendor, date/time, and weather conditions
-- **Festival Simulation**: Test impact of major Mumbai festivals
-- **Historical Context**: View 48-hour demand patterns
-- **Batch Forecasting**: Generate 24-hour demand forecasts
-- **Downloadable Results**: Export predictions as CSV
+This will launch a local web application where you can:
 
-## 📊 Model Performance
-
-The system trains both XGBoost and Random Forest models with time-based validation:
-
-- **Validation Split**: Last 20% of data (time-based)
-- **Cross-Validation**: TimeSeriesSplit for hyperparameter tuning
-- **Metrics**: MAE, RMSE, MAPE
-- **Typical Performance**: MAE ~3-5 units, MAPE ~15-25%
-
-## 🏆 Key Features & Realism
-
-### Mumbai-Specific Elements
-- **Monsoon Weather Patterns**: Heavy rainfall clustering in July-September
-- **Festival Calendar**: Ganesh Chaturthi, Janmashtami, Independence Day, Eid
-- **Location-Based Demand**: Business districts vs. markets vs. stations
-- **Cuisine-Specific Weather Impact**: Tea sales up during rain, cold drinks down
-
-### Realistic Behavioral Patterns
-- **Peak Hours**: Vendor-specific (breakfast, lunch, evening snacks)
-- **Weekend Effects**: Lower demand in business areas, higher in leisure areas
-- **Festival Multipliers**: 50-150% demand increases during major festivals
-- **Weather Correlations**: Rain affects different cuisines differently
-
-## 📈 Usage Examples
-
-### Prediction Scenarios
-1. **Rainy Festival Evening**: High demand at market vendors during Ganesh Chaturthi
-2. **Business Lunch**: Peak demand at BKC during weekday lunch hours
-3. **Weekend Morning**: Lower office area demand, higher college area demand
-4. **Hot Weather**: Increased beverage sales, decreased hot food sales
-
-### Model Insights
-- **Most Important Features**: Hour of day, lag values, traffic density
-- **Weather Impact**: 20-40% demand changes based on rainfall
-- **Festival Boost**: Major festivals can double demand
-- **Location Matters**: Business districts peak at lunch, markets peak evenings
-
-## 🔧 Technical Details
-
-### Data Generation
-- **Random Seed**: 42 (fully reproducible)
-- **Weather Patterns**: Based on Mumbai monsoon climatology
-- **Holiday Calendar**: Maharashtra government official holidays 2025
-- **Realistic Noise**: 15% variance with outliers and missing values
-
-### Model Training
-- **Feature Engineering**: 23 engineered features from raw data
-- **Encoding**: Label encoding for categorical variables
-- **Validation**: Time-based split to prevent data leakage
-- **Hyperparameter Tuning**: GridSearchCV with TimeSeriesSplit
-
-### Streamlit App Features
-- **Real-time Predictions**: Instant forecasts with parameter changes
-- **Interactive Controls**: Sliders, dropdowns, date pickers
-- **Visualizations**: Plotly charts for historical context
-- **Explanations**: Natural language prediction reasoning
-- **Export Options**: CSV download for batch predictions
-
-## 🌟 Next Steps & Improvements
-
-1. **Real Data Integration**: Replace synthetic data with actual vendor sales
-2. **Advanced Models**: Try LSTM, Prophet, or ensemble methods
-3. **External Data**: Weather APIs, event calendars, traffic data
-4. **Vendor-Specific Models**: Individual models per vendor type
-5. **Real-time Updates**: Live data feeds and model retraining
-
-## 📞 Support
-
-For questions or issues:
-- Review the Jupyter notebook for detailed analysis
-- Check model artifacts and metadata
-- Examine the Streamlit app code for implementation details
-
-## 📄 License
-
-This project is created for educational and demonstration purposes. The synthetic dataset is generated and does not represent real vendor data.
+- Input vendor parameters
+- View historical sales
+- Get hourly demand predictions
+- Visualize trends with interactive charts
 
 ---
 
-**Created with**: Python 3.10+, XGBoost, Random Forest, Streamlit, Plotly  
-**Random Seed**: 42 (reproducible results)  
-**Generated**: October 1, 2025
+## Model Training
+
+- The model is a **Random Forest Regressor** trained on historical vendor sales.
+- Training notebook: `demand_forecast_train.ipynb`
+- Pre-trained model file: `rf_model.pkl`
+- Preprocessing objects: `feature_columns.pkl` and `label_encoders.pkl`
+
+### Steps to retrain the model:
+
+1. Update the dataset with new vendor data.
+2. Run `demand_forecast_train.ipynb`.
+3. Save the updated model and encoders.
+
+---
+
+## Visualization
+
+- Historical demand trends
+- Predicted demand vs actual sales
+- Weather impact on sales
+- Vendor-specific performance charts
+
+---
+
+## Screenshots
+
+### Streamlit Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Predicted vs Actual Sales
+
+![Prediction](screenshots/prediction_chart.png)
+
+### Weather Impact Chart
+
+![Weather](screenshots/weather_impact.png)
+
+_Note: Replace the screenshots with actual images from your app._
+
+---
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Commit changes: `git commit -m "Add your feature"`
+4. Push to branch: `git push origin feature/your-feature`
+5. Create a Pull Request
+
+---
+
+### Mumbai Vendor Demand Forecasting - App File Features
+
+This document outlines the purpose and features of each file in the Mumbai Vendor Demand Forecasting project.
+
+---
+
+## 1. `app_streamlit.py` (Streamlit Web App)
+
+**Purpose:** Interactive user interface to input vendor data, fetch predictions, and visualize results.
+
+**Features:**
+
+- **User Inputs:**
+
+  - Vendor parameters: `vendor_id`, `location_type`, `cuisine_type`, `avg_price`, etc.
+  - Optional: Date, time, environmental inputs (temperature, traffic).
+
+- **Prediction Section:**
+
+  - Uses pre-trained `rf_model.pkl` to predict hourly demand.
+  - Displays forecast for selected vendor and time.
+
+- **Visualizations:**
+
+  - Historical demand trends.
+  - Predicted vs actual demand comparison charts.
+  - Weather and event impact on sales.
+
+- **Integration:**
+
+  - Loads `feature_columns.pkl` and `label_encoders.pkl` for preprocessing.
+  - Uses Plotly and Plotly Express for interactive charts.
+
+---
+
+## 2. `demand_forecast_train.ipynb` (Model Training Notebook)
+
+**Purpose:** Data preprocessing, feature engineering, and training the Random Forest model.
+
+**Features:**
+
+- **Data Loading and Cleaning:** Reads historical vendor CSV and handles missing values.
+- **Feature Engineering:**
+
+  - Time-based features: `hour_of_day`, `is_weekend`, etc.
+  - Lag features: `lag_1h_units`, `lag_24h_units`.
+  - Encodes categorical variables using label encoders.
+
+- **Model Training:** Trains a Random Forest Regressor.
+- **Evaluation:** Calculates RMSE, MAE, and R²; saves results to `model_evaluation_results.csv`.
+- **Model Export:** Saves `rf_model.pkl` and preprocessing objects (`feature_columns.pkl`, `label_encoders.pkl`).
+
+---
+
+## 3. `requirements.txt`
+
+**Purpose:** Lists Python dependencies needed to run the project.
+
+**Key Packages:**
+
+- `streamlit` – Web application framework
+- `pandas`, `numpy` – Data manipulation
+- `scikit-learn` – Machine learning
+- `joblib` – Model serialization
+- `plotly` – Visualization
+- `requests` – Fetching API data
+- `deep_translator` – Optional translation of fields
+
+---
+
+## 4. `mumbai_vendors_hourly_20250701_20250930.csv` (Dataset)
+
+**Purpose:** Raw historical vendor sales data used for training and testing.
+
+**Features:**
+
+- Vendor identifiers: `vendor_id`, `location_type`, `cuisine_type`
+- Sales metrics: `avg_price`, `menu_diversity`, `units_sold`
+- Temporal features: `hour_of_day`, `is_weekend`, `is_holiday`, `is_festival`
+- Environmental features: `temperature_c`, `rainfall_mm`, `humidity_pct`, `wind_speed_kmh`
+- Event/traffic features: `event_nearby`, `traffic_density_encoded`
+- Competitor information: `competitor_count`
+- Lag features: `lag_1h_units`, `lag_24h_units`
+
+---
+
+## 5. `feature_columns.pkl` & `label_encoders.pkl`
+
+**Purpose:** Preprocessing artifacts to ensure correct feature encoding and order.
+
+**Features:**
+
+- `feature_columns.pkl`: List of model features in the correct order
+- `label_encoders.pkl`: Encoders for categorical variables like `vendor_id`, `location_type`, `cuisine_type`, `traffic_density`
+
+---
+
+## 6. `model_evaluation_results.csv`
+
+**Purpose:** Stores model performance metrics.
+
+**Features:**
+
+- RMSE (Root Mean Squared Error)
+- MAE (Mean Absolute Error)
+- R² (Coefficient of Determination)
+- Helps compare different model versions
+
+## Contact
+
+- GitHub: [srivatsacool](https://github.com/srivatsacool)
+- Project Author: Srivatsa Cool
