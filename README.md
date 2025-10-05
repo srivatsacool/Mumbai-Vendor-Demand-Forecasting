@@ -4,21 +4,91 @@ Predict hourly demand for street food vendors in Mumbai using machine learning. 
 
 ---
 
-## Table of Contents
+# Live WebApp links :
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Data](#data)
-- [Technical Stack](#technical-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Model Training](#model-training)
-- [Visualization](#visualization)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [License](#license)
+- **v1** - https://mumbai-vendor-demand-forecasting.streamlit.app/
+- **v2** - https://mumbai-vendor-demand-forecasting-v2.streamlit.app/ 
+- **v3** - https://mumbai-vendor-demand-forecasting-v3.streamlit.app/ 
+- **v4** - https://mumbai-vendor-demand-forecasting-v4.streamlit.app/
+
+## Version 0.1 → `app_streamlit.py` (4 days ago)
+**Core Features (Initial MVP):**
+- Basic Streamlit app structure
+- Page configuration and layout
+- Load vendor data (CSV)
+- Basic prediction functionality with a model (XGBoost or Random Forest)
+- Simple sidebar for selecting vendor, date, and hour
+- Minimal charts or visualizations
+- ❌ No multi-language support
+- ❌ No advanced weather integration
 
 ---
+
+## Version 1 → `app_v1.py` (11 hours ago)
+**Added / Improved Features:**
+- Full model and artifacts loading (XGBoost/RF, label encoders, feature columns, metadata)
+- Historical data loading with proper timezone handling
+- Weather data integration (current weather) using WeatherAPI
+- Sidebar displays auto-filled weather information
+- Optional manual override for temperature, rainfall, and humidity
+- Event/festival simulation
+- Traffic and competitor inputs for scenario simulation
+- Basic prediction explanation logic
+- Hourly & daily demand charts
+- Improved layout and user interface
+- ❌ No multi-language support
+
+---
+
+## Version 2 → `app_v2.py` (17 minutes ago)
+**Added / Improved Features:**
+- More detailed scenario simulation options
+- Improved prediction explanation logic (peak hours, rain/festival effects)
+- More historical visualization charts (48-hour context, heatmaps, 3D scatter plots)
+- Rolling average trends and correlations
+- Download prediction result as CSV
+- Caching for API calls (weather, alerts)
+- ❌ No multi-language support
+
+---
+
+## Version 3 → `app_v3.py` (11 hours ago)
+**Added / Improved Features:**
+- Multi-tab layout for better visualization
+- Additional vendor comparison charts
+- Advanced insights like correlation heatmap, rolling 7-day trend
+- Enhanced styling of plots (colors, markers, annotations)
+- Improved handling of missing/empty historical data
+- ❌ No multi-language support
+
+---
+
+## Version 4 → `app_v4.py` (latest)
+**Latest Features / Additions:**
+- Attempted multi-language support using `deep_translator`
+- Fully integrated weather alerts and current weather display
+- Prediction logic fully functional with explanation
+- All charts, historical visualizations, and scenario parameters implemented
+- Download prediction as CSV
+- ✅ : Implemented Multi-language 
+
+---
+# Mumbai Street Vendor Demand Forecasting - Version Features
+
+| Version | File | Date | Key Features | Multi-language | Weather Integration | Charts & Visuals | Download Prediction | Notes |
+|---------|------|------|--------------|----------------|-------------------|-----------------|------------------|-------|
+| 0.1 | app_streamlit.py | 4 days ago | Basic Streamlit layout, CSV vendor data load, initial prediction | ❌ | ❌ | Minimal | ❌ | Initial MVP |
+| 1 | app_v1.py | 11 hours ago | Full model/artifacts load (XGB/RF), historical data with timezone, weather API, scenario inputs, prediction explanation, hourly/daily charts | ❌ | ✅ Current weather | Basic | ❌ | Improved UI & functionality |
+| 2 | app_v2.py | 17 minutes ago | Detailed scenario simulation, improved prediction explanation, 48-hour context, heatmaps, 3D scatter, rolling avg trends, correlations, API caching | ❌ | ✅ | Advanced visualizations | ✅ CSV | Enhanced analytics & caching |
+| 3 | app_v3.py | 11 hours ago | Multi-tab layout, vendor comparison charts, correlation heatmap, rolling 7-day trend, improved plot styling, better missing data handling | ❌ | ✅ | Advanced visualizations | ✅ CSV | Enhanced user experience & insights |
+| 4 | app_v4.py | Latest | Attempted multi-language support (deep_translator), full weather alerts, full prediction/explanation, all charts & scenario parameters, download CSV | ✅ Fully functional | ✅ | Full visualizations | ✅ CSV | Multi-language integration attempted, pending module |
+
+### Legend
+- ✅ : Implemented  
+- ❌ : Not implemented  
+- ⚠️ : Partially implemented / pending issues  
+
+
 
 ## Project Overview
 
