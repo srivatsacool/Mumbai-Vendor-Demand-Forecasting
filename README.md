@@ -76,7 +76,7 @@ Predict hourly demand for street food vendors in Mumbai using machine learning. 
 | 1 | app_v1.py | 11 hours ago | Full model/artifacts load (XGB/RF), historical data with timezone, weather API, scenario inputs, prediction explanation, hourly/daily charts | ❌ | ✅ Current weather | Basic | ❌ | Improved UI & functionality |
 | 2 | app_v2.py | 17 minutes ago | Detailed scenario simulation, improved prediction explanation, 48-hour context, heatmaps, 3D scatter, rolling avg trends, correlations, API caching | ❌ | ✅ | Advanced visualizations | ✅ CSV | Enhanced analytics & caching |
 | 3 | app_v3.py | 11 hours ago | Multi-tab layout, vendor comparison charts, correlation heatmap, rolling 7-day trend, improved plot styling, better missing data handling | ❌ | ✅ | Advanced visualizations | ✅ CSV | Enhanced user experience & insights |
-| 4 | app_v4.py | Latest | Attempted multi-language support (deep_translator), full weather alerts, full prediction/explanation, all charts & scenario parameters, download CSV | ✅ Fully functional (missing module) | ✅ | Full visualizations | ✅ CSV | Multi-language integration attempted, pending module |
+| 4 | app_v4.py | Latest | Attempted multi-language support (deep_translator), full weather alerts, full prediction/explanation, all charts & scenario parameters, download CSV | ✅ Fully functional | ✅ | Full visualizations | ✅ CSV | Multi-language integration attempted, pending module |
 
 ### Legend
 - ✅ : Implemented  
